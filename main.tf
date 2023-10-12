@@ -29,9 +29,14 @@ provider "aws" {
   region = "eu-central-1"
 }
 
+variable "ssh_public_key" {
+  description = "SSH public key contents"
+  type        = string
+}
+
 resource "hcloud_ssh_key" "example" {
   name       = "example"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = var.ssh_public_key
 }
 
 resource "hcloud_server" "example" {
