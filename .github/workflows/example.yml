@@ -1,0 +1,58 @@
+name: 'example'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**'
+  pull_request:
+
+env:
+  HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+  TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+permissions:
+  contents: read
+
+jobs:
+  infrastructure:
+    name: 'Example'
+    runs-on: ubuntu-latest
+    environment: prod
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: infrastructure
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+
+      - name: Terraform Init
+        working-directory: infrastructure/
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: infrastructure/
+        run: terraform plan -input=false -out=terraform.plan
+
+      - name: Manual Approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.GH_API_TOKEN }}
+          approvers: oleksiy-pototskyy
+
+      - name: Terraform Apply
+        working-directory: infrastructure/
+        run: terraform apply -auto-approve -input=false terraform.plan
