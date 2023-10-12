@@ -39,6 +39,14 @@ resource "hcloud_ssh_key" "example" {
   public_key = var.ssh_public_key
 }
 
+data "external" "cloudflare_ips" {
+  program = ["/usr/bin/python3", "${path.module}/scripts/cloudflare.py"]
+}
+
+locals {
+  cloudflare_ips = split("\n", data.external.cloudflare_ips.result.firewall_ips_https)
+}
+
 resource "hcloud_firewall" "ssh" {
   name = "ssh"
 
@@ -59,9 +67,7 @@ resource "hcloud_firewall" "https" {
     direction = "in"
     protocol  = "tcp"
     port = "443"
-    source_ips = [
-      "0.0.0.0/0"
-    ]
+    source_ips = local.cloudflare_ips
   }
 }
 
