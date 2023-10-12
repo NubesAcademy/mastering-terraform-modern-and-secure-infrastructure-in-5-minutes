@@ -39,16 +39,42 @@ resource "hcloud_ssh_key" "example" {
   public_key = var.ssh_public_key
 }
 
+resource "hcloud_firewall" "ssh" {
+  name = "ssh"
+
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port = "22"
+    source_ips = "0.0.0.0/0"
+  }
+}
+
+resource "hcloud_firewall" "https" {
+  name = "https"
+
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port = "443"
+    source_ips = "0.0.0.0/0"
+  }
+}
+
 resource "hcloud_server" "example" {
   name        = "example"
   image       = "ubuntu-22.04"
   server_type = "cx11"
   location    = "nbg1"
   ssh_keys    = [hcloud_ssh_key.example.id]
+  firewall_ids = [
+    hcloud_firewall.ssh.id,
+    hcloud_firewall.https.id
+  ]
 
   public_net {
     ipv4_enabled = true
-    ipv6_enabled = true
+    ipv6_enabled = false
   }
 
   user_data = <<EOD
