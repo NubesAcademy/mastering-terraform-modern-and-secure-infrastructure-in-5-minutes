@@ -46,7 +46,9 @@ resource "hcloud_firewall" "ssh" {
     direction = "in"
     protocol  = "tcp"
     port = "22"
-    source_ips = "0.0.0.0/0"
+    source_ips = [
+      "0.0.0.0/0"
+    ]
   }
 }
 
@@ -57,7 +59,9 @@ resource "hcloud_firewall" "https" {
     direction = "in"
     protocol  = "tcp"
     port = "443"
-    source_ips = "0.0.0.0/0"
+    source_ips = [
+      "0.0.0.0/0"
+    ]
   }
 }
 
