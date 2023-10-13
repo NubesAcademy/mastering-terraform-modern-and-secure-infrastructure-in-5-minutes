@@ -1,58 +1,64 @@
+# Define the name of the GitHub Actions workflow.
 name: 'example'
 
+# Specify when the workflow should run.
 on:
-  push:
+  push: # Trigger the workflow on pushes to the main branch.
     branches:
       - main
     paths:
-      - '**'
-  pull_request:
+      - '**' # Watch for changes in all files.
+  pull_request: # Trigger the workflow on pull requests.
 
+# Define environment variables, which can be accessed securely.
 env:
-  HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
-  TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }}
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+  HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }} # Access the secret 'HCLOUD_TOKEN' stored in GitHub Secrets.
+  TF_VAR_ssh_public_key: ${{ secrets.SSH_PUBLIC_KEY }} # Access the SSH public key stored in GitHub Secrets.
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Access AWS access key ID stored in GitHub Secrets.
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Access AWS secret access key stored in GitHub Secrets.
+  AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }} # Access AWS region stored in GitHub Secrets.
 
+# Define permissions for the workflow.
 permissions:
-  contents: read
+  contents: read # Allow reading repository contents.
 
+# Define the jobs to be executed.
 jobs:
   infrastructure:
     name: 'Example'
-    runs-on: ubuntu-latest
-    environment: prod
+    runs-on: ubuntu-latest # Use an Ubuntu-based runner.
+
+    environment: prod # Specify the environment (you may configure this as needed).
 
     defaults:
       run:
-        shell: bash
+        shell: bash # Set the shell for all steps to bash.
 
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: infrastructure
+          path: infrastructure # Checkout the repository to a directory named 'infrastructure'.
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.7
+          terraform_version: 1.5.7 # Set the desired Terraform version.
 
       - name: Terraform Init
         working-directory: infrastructure/
-        run: terraform init
+        run: terraform init # Initialize Terraform in the 'infrastructure' directory.
 
       - name: Terraform Plan
         working-directory: infrastructure/
-        run: terraform plan -input=false -out=terraform.plan
+        run: terraform plan -input=false -out=terraform.plan # Create a Terraform plan.
 
       - name: Manual Approval
         uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ secrets.GH_API_TOKEN }}
-          approvers: oleksiy-pototskyy
+          secret: ${{ secrets.GH_API_TOKEN }} # Access the GitHub API token stored in GitHub Secrets.
+          approvers: oleksiy-pototskyy # Specify the approver's GitHub username.
 
       - name: Terraform Apply
         working-directory: infrastructure/
-        run: terraform apply -auto-approve -input=false terraform.plan
+        run: terraform apply -auto-approve -input=false terraform.plan # Apply the Terraform plan.
