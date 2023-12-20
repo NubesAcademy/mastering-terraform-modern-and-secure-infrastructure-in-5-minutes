@@ -1,6 +1,6 @@
 # Mastering Terraform: Modern and Secure Infrastructure in 5 Minutes
 
-Welcome to the "Mastering Terraform: Modern and Secure Infrastructure in 5 Minutes" educational project! In this project, you will learn how to use Terraform to deploy a modern and secure infrastructure on the cloud in just 5 minutes. Whether you're a beginner or an experienced user, this project will guide you through the process of creating infrastructure as code.
+Welcome to the ["Mastering Terraform: Modern and Secure Infrastructure in 5 Minutes"](https://www.udemy.com/course/mastering-terraform-modern-secure-infrastructure-in-5-min/?referralCode=73C9AB466B78FF8CF604) educational project! In this project, you will learn how to use Terraform to deploy a modern and secure infrastructure on the cloud in just 5 minutes. Whether you're a beginner or an experienced user, this project will guide you through the process of creating infrastructure as code.
 
 ## Table of Contents
 
@@ -31,14 +31,17 @@ Before you begin, make sure you have the following prerequisites:
 
 To get started with this project, follow these steps:
 
-1. Clone the project repository from [GitHub Link](https://github.com/NubesAcademy/mastering-terraform-modern-and-secure-infrastructure-in-5-minutes).
+1. Clone the project repository from [GitHub Link](https://github.com/oleksiy-pototskyy/mastering-terraform-modern-and-secure-infrastructure-in-5-minutes).
 
-2. Review the project structure to understand the layout and organization.
+2. Subscribe on educational video course (https://www.udemy.com/course/mastering-terraform-modern-secure-infrastructure-in-5-min/?referralCode=73C9AB466B78FF8CF604)
+
+3. Review the project structure to understand the layout and organization.
 
 ## Project Structure
 
 The project structure is organized as follows:
 
+```
 mastering-terraform/
 ├── README.md
 ├── .github/
@@ -51,7 +54,7 @@ mastering-terraform/
 ├── README.md
 ├── LICENSE
 └── .gitignore
-
+```
 
 - `main.tf`: Terraform configuration file.
 - `.github/workflows/`: Contains GitHub Actions configuration files.
