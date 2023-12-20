@@ -69,7 +69,7 @@ Follow these steps to master Terraform and deploy a secure infrastructure:
 ### Step 1: Clone GitHub repository with the project 
 
 ```bash
-git clone https://github.com/NubesAcademy/mastering-terraform-modern-and-secure-infrastructure-in-5-minutes.git
+git clone https://github.com/oleksiy-pototskyy/mastering-terraform-modern-and-secure-infrastructure-in-5-minutes.git
 ```
 
 ### Step 1: Set Up Terraform
@@ -96,7 +96,7 @@ Congratulations! You've completed the project, and you can now confidently use T
 
 - [Terraform Documentation](https://www.terraform.io/docs/index.html): Explore Terraform's official documentation for in-depth information.
 - [Terraform Registry](https://registry.terraform.io/): Discover pre-built Terraform modules and configurations.
-- [GitHub Repository](https://github.com/NubesAcademy/mastering-terraform-modern-and-secure-infrastructure-in-5-minutes): Access the project's source code and files.
+- [GitHub Repository](https://github.com/oleksiy-pototskyy/mastering-terraform-modern-and-secure-infrastructure-in-5-minutes): Access the project's source code and files.
 
 ## License
 
